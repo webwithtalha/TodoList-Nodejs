@@ -84,8 +84,23 @@ const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(req.user);
 });
 
+const logout = asyncHandler(async (req, res) => {
+  res.setHeader(
+    "Set-Cookie",
+    cookie.serialize("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+      path: "/",
+    })
+  );
+  res.status(200).json({
+    message: "User successfully logout!",
+  });
+});
+
 module.exports = {
   registerUser,
   loginUser,
   getMe,
+  logout,
 };
