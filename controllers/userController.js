@@ -59,19 +59,19 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await bcrypt.compare(password, user.password))) {
-    res.setHeader(
-      "Set-Cookie",
-      cookie.serialize("token", generateToken(user._id), {
-        httpOnly: true,
-        maxAge: 60 * 24,
-        path: "/",
-      })
-    );
+    // res.setHeader(
+    //   "Set-Cookie",
+    //   cookie.serialize("token", generateToken(user._id), {
+    //     httpOnly: true,
+    //     maxAge: 60 * 24,
+    //     // path: "/",
+    //   })
+    // );
     res.json({
       _id: user.id,
       name: user.name,
       email: user.email,
-      // token: generateToken(user._id),
+      token: generateToken(user._id),
     });
   } else {
     res.status(400).json({
