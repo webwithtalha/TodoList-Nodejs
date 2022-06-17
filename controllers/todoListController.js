@@ -1,9 +1,11 @@
 const asyncHandler = require("express-async-handler");
 const AddTask = require("../models/addTodoList");
+const User = require("../models/userModel");
 
 const addTask = asyncHandler(async (req, res) => {
   const new_task = await AddTask.create({
     task: req.body.task,
+    user: req.user.id,
   });
 
   res.status(200).json({
@@ -13,7 +15,9 @@ const addTask = asyncHandler(async (req, res) => {
 });
 
 const getTask = asyncHandler(async (req, res) => {
-  const tasks = await AddTask.find().sort({ createdAt: -1 });
+  const tasks = await AddTask.find({ user: req.user.id }).sort({
+    createdAt: -1,
+  });
 
   res.status(200).json({
     status: "success",

@@ -7,8 +7,8 @@ const {
 } = require("../controllers/todoListController");
 const { protectedRoute } = require("../middlewares/authMiddleware");
 
-router.post("/addTask", addTask);
-router.get("/getTask", getTask);
+router.post("/addTask", protectedRoute, addTask);
+router.get("/getTask", protectedRoute, getTask);
 router.delete("/deleteTask/:id", deleteTask);
 
 module.exports = router;

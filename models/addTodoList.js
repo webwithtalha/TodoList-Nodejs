@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const addTodoSchema = mongoose.Schema(
   {
+    user: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+    },
     task: {
       type: String,
     },
