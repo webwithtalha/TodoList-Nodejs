@@ -71,6 +71,7 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      roles: user.roles,
       token: generateToken(user._id),
     });
   } else {
@@ -81,7 +82,11 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const getMe = asyncHandler(async (req, res) => {
-  res.status(200).json(req.user);
+  const userData = await User.find({ _id: req.user.id });
+  res.status(200).json({
+    status: "success",
+    user: userData[0],
+  });
 });
 
 const logout = asyncHandler(async (req, res) => {
