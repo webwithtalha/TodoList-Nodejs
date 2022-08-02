@@ -35,3 +35,18 @@ module.exports = {
   getTask,
   deleteTask,
 };
+
+const updateTask = asyncHandler(async (req, res) => {
+  const task = await AddTask.findById(req.params.id);
+  console.log(task);
+  task.task = req.body.task;
+  await task.save();
+  res.status(200).json({ message: "Task updated Successfully" });
+});
+
+module.exports = {
+  addTask,
+  getTask,
+  deleteTask,
+  updateTask,
+};
