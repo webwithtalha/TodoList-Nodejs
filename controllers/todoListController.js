@@ -25,6 +25,15 @@ const getTask = asyncHandler(async (req, res) => {
   });
 });
 
+const getSingleTask = asyncHandler(async (req, res) => {
+  const tasks = await AddTask.findById(req.params.id);
+
+  res.status(200).json({
+    status: "success",
+    tasks,
+  });
+});
+
 const deleteTask = asyncHandler(async (req, res) => {
   await AddTask.findByIdAndDelete(req.params.id);
   res.status(200).json({ message: "Task Deleted Successfully" });
@@ -40,7 +49,7 @@ const updateTask = asyncHandler(async (req, res) => {
   const task = await AddTask.findById(req.params.id);
   task.task = req.body.task;
   await task.save();
-  res.status(200).json({ message: "Task updated Successfully" });
+  res.status(200).json({ message: "Task updated Successfully", task });
 });
 
 module.exports = {
@@ -48,4 +57,5 @@ module.exports = {
   getTask,
   deleteTask,
   updateTask,
+  getSingleTask,
 };
