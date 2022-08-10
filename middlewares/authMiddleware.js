@@ -4,7 +4,7 @@ const User = require("../models/userModel");
 
 const protectedRoute = asyncHandler(async (req, res, next) => {
   let token;
-  console.log("authorization", req.headers.authorization);
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
